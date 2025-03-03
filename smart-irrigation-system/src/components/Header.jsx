@@ -12,10 +12,7 @@ export default function Header (props) {
             
         <div className="center">
             <p className=" color">Plants ({props.number})</p>    
-        </div>       
-        
-                
-             
+        </div>           
         </header>
     )
 }
