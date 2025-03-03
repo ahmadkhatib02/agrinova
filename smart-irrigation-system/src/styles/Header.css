@@ -1,0 +1,32 @@
+header{
+    font-family: Inter;
+    background: white;
+    width: 100%;
+    
+}
+
+.flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 46px;
+    padding-bottom: 27px;
+    position: relative;
+}
+
+.center{
+    flex: 1;
+    text-align: center;
+}
+img{
+    position: absolute;
+    left: 24px;
+}
+
+.color{
+    color: #C4EADC;
+    background: #00A86B;
+    display: inline-block;
+    padding: 11px 57px;   
+}
+
