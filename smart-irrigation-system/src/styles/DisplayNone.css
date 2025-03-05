@@ -1,0 +1,32 @@
+article {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+
+.bottom{
+    margin-bottom: 44px;
+}
+
+.noPlant{
+    margin-top: 0;
+    margin-bottom: 22px;
+}
+
+.typography{
+    font-family: Inter;
+    font-weight: 600;
+    font-size: 21.9px;
+    line-height: 26.5px;
+    letter-spacing: 0%;
+    color: #333333;
+}
+
+.noAdded{
+    margin-top: 0;
+    font-size: 16.6px;
+    line-height: 20px;
+    color: #8A8B8A;
+}

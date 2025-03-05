@@ -1,0 +1,34 @@
+footer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 66px;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    background-color: white;
+    padding: 8px 12px;
+}
+
+.tab{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tab-img{
+    width: 20px;
+    height: 20px;
+}
+
+.active, .inactive{
+    font-size: 9px;
+}
+.active{
+    color: #49AE8A;
+}
+
+.inactive{
+    color: #BEBEBE;
+}

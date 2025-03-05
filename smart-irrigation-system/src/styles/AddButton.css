@@ -1,0 +1,22 @@
+.add{
+    border-radius: 50%;
+    position: fixed;
+    bottom: 68px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: xx-large;
+    border: none;
+    background-color: #00a86a;
+    cursor: pointer;
+}
+
+.add:hover{
+    border:1px solid #00a86a;
+    background-color: white;
+    color: #00a86a;
+}
