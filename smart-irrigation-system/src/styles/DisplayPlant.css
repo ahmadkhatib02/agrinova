@@ -1,0 +1,33 @@
+section{
+    margin-top: 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 20px;
+    border-bottom: 1px solid #ececec;
+    padding-bottom: 12px;
+    position: relative;
+    cursor: pointer;
+}
+
+.info{
+    margin-top: 17px;
+}
+
+.plant-name{
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+.plant-type{
+    margin-top: 0px;
+    font-size: 12px;
+}
+
+.position-button {
+    position: absolute;
+    top: 50%;
+    left: 80%; 
+    transform: translateY(-50%); 
+    margin-left: 32px; 
+}

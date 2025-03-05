@@ -18,7 +18,8 @@ header{
     flex: 1;
     text-align: center;
 }
-img{
+
+.header-logo{
     position: absolute;
     left: 24px;
 }
