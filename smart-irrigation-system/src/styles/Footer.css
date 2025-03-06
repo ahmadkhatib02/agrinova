@@ -24,6 +24,7 @@ footer{
 
 .active, .inactive{
     font-size: 9px;
+    font-family: Inter;
 }
 .active{
     color: #49AE8A;
