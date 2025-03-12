@@ -5,7 +5,7 @@ const users = require("../Database/db.js"); // Replace with the path to your use
 // Initialize Firebase Admin SDK
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://smart-irrigation-system-4b165-default-rtdb.asia-southeast1.firebasedatabase.app/", // Replace with your Realtime Database URL
+  databaseURL: process.env.REACT_APP_DATABASE_URL, // Replace with your Realtime Database URL
 });
 
 const db = admin.database();
