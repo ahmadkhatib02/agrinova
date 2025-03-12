@@ -25,3 +25,6 @@ dist-ssr
 
 #Enviromental Variables
 .env
+
+# Ignore sensitive files in the Database folder
+Database/*.json
