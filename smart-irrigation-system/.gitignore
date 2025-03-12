@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+#Enviromental Variables
+.env
+
+# Ignore sensitive files in the Database folder
+Database/*.json

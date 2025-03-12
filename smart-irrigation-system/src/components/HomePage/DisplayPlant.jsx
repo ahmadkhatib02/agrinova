@@ -2,13 +2,14 @@ import "../../styles/DisplayPlant.css"
 import button from "../../images/button.png"
 
 function DisplayPlant (props){
-
+    // Handles click event to check plant details
     function handleClick(event){
         if(event.currentTarget.dataset.check){
             checkPlant(event.currentTarget.dataset.check);
         }
     }
-    
+
+    // Retrieves plant object based on ID
     function checkPlant (plantId){
         plantId = Number(plantId)
         const plantObject = props.plant.filter(plant =>{
@@ -16,6 +17,7 @@ function DisplayPlant (props){
         })[0]; 
     }
 
+    // Maps through plant data and displays each plant
     const display = props.plant.map(plant => {
         return (
             <section key={plant.id} data-check ={plant.id} onClick={handleClick}>
@@ -25,6 +27,7 @@ function DisplayPlant (props){
                 <h1 className="plant-name typography">{plant.name}</h1>
                 <p className="plant-type typography noAdded">{plant.type}</p>
               </div> 
+              {/* Button to check plant status */}
               <img className="position-button" src={button} alt= {`Check ${plant.name}`} />
             </section>
         )

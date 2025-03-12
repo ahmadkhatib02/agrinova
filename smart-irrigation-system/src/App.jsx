@@ -7,7 +7,9 @@ function App() {
   return (
     <Router>
     <Routes>
+      {/* Route for the home page */}
       <Route path="/homePage" element={<HomePage />} />
+      {/* Default route - Welcome page */}
       <Route path="/" element ={<Welcome />}/>
     </Routes>
   </Router>
