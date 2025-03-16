@@ -1,5 +1,6 @@
+require("dotenv").config({ path: "../Database/.env" });
 const admin = require("firebase-admin");
-const serviceAccount = require("../Database/smart-irrigation-system-4b165-firebase-adminsdk-fbsvc-1ac07b94f3.json"); // Replace with your service account key path
+const serviceAccount = require("../Database/smart-irrigation-system-4b165-firebase-adminsdk-fbsvc-08ca202860.json"); // Replace with your service account key path
 const users = require("../Database/db.js"); // Replace with the path to your users data
 
 // Initialize Firebase Admin SDK

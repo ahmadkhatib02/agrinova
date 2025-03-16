@@ -9,7 +9,7 @@ export default function Welcome () {
     return (
         <main>
             <div >
-                <img  src={plant}/>
+                
             </div>
 
             <div>

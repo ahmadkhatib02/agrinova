@@ -5,6 +5,7 @@ const users = [
       lastName: "Doe",
       email: "johndoe@example.com",
       password: "securePassword123", 
+      profilePicture: "../smart-irrigation-system/src/images/Blank pfp.jpg",
       plants: [
         {
           id: 1,
@@ -22,7 +23,7 @@ const users = [
           },
         },
         {
-          id: 3,
+          id: 2,
           name: "Cactus",
           type: "Wheat (Spring)",
           imageUrl: "./src/images/plant3.png",
@@ -44,9 +45,10 @@ const users = [
       lastName: "Smith",
       email: "janesmith@example.com",
       password: "anotherSecurePassword",
+      profilePicture: "../smart-irrigation-system/src/images/Blank pfp.jpg",
       plants: [
         {
-          id: 2,
+          id: 1,
           name: "Basil",
           type: "Onion (Green)",
           imageUrl: "./src/images/plant2.png",
@@ -61,7 +63,7 @@ const users = [
           },
         },
         {
-          id: 4,
+          id: 2,
           name: "Rosemary",
           type: "Potatoes",
           imageUrl: "./src/images/plant4.png",
