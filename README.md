@@ -98,7 +98,7 @@ This database setup contains user profiles and their associated plant data for t
 
 ## Database Structure Diagram
 
-![Database Diagram](./src/images/Databasediagram.png)
+![Database Diagram](smart-irrigation-system/src/images/Databasediagram.png)
 
 ## Data Structure  
 
