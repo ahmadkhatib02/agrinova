@@ -1,7 +1,9 @@
 import "../../styles/DisplayPlant.css"
 import button from "../../images/button.png"
+import { useNavigate } from "react-router-dom";
 
 function DisplayPlant (props){
+    const navigate = useNavigate()
     // Handles click event to check plant details
     function handleClick(event){
         if(event.currentTarget.dataset.check){
@@ -15,12 +17,15 @@ function DisplayPlant (props){
         const plantObject = props.plant.filter(plant =>{
             return plant.id === plantId
         })[0]; 
+        navigate("/about-plant", {
+            state: {plantObject: plantObject}
+        })
     }
 
     // Maps through plant data and displays each plant
     const display = props.plant.map(plant => {
         return (
-            <section key={plant.id} data-check ={plant.id} onClick={handleClick}>
+            <section key={plant.id} data-check ={plant.id} onClick={handleClick} className="plant-container">
               <img src={plant.imageUrl} alt={plant.name +" image"} /> 
 
               <div className="info">
