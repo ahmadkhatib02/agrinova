@@ -5,6 +5,9 @@ import back from "../images/backTrack.png";
 import { getDatabase, ref, get } from "firebase/database";
 import All from "../components/AboutPlantPage/All";
 import "../styles/AboutPlant.css";
+import Ph from "../components/AboutPlantPage/Ph";
+import Humidity from "../components/AboutPlantPage/Humidity";
+import NPK from "../components/AboutPlantPage/NPK";
 
 export default function AboutPlantPage() {
     const location = useLocation()
@@ -146,15 +149,15 @@ export default function AboutPlantPage() {
                     )}
 
                     {ph &&(
-                        <h1>Ph tab</h1>
+                        <Ph plant= {plant} idealConditions={idealConditions}/>
                     )}
 
                     {humidity&& (
-                        <h1>humidity tab</h1>
+                        <Humidity plant={plant} idealConditions={idealConditions}/>
                     )}
 
                     {npk && (
-                        <h1>NPK tab</h1>
+                        <NPK plant={plant} idealConditions={idealConditions}/>
                     )}
                     
                 </section>       
