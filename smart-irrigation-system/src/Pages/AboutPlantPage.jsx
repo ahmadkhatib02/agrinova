@@ -162,7 +162,7 @@ export default function AboutPlantPage() {
                     
                 </section>       
             </main>
-            <Footer />
+            <Footer  page ="home"/>
         </>
     );
 }

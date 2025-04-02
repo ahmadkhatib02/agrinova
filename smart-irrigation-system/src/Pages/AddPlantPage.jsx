@@ -126,7 +126,7 @@ export default function AddPlantPage({ userID }) {
                     </form>
                 </div>
             </main>
-            <Footer />
+            <Footer  page ="home"/>
         </>
     )
 }

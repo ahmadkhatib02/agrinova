@@ -45,7 +45,7 @@
               <button className="add" onClick={handleAddPlantClick}>+</button>
           </main>
           
-          <Footer />
+          <Footer page = "home"/>
           </>
       )
   }
