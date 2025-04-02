@@ -1,6 +1,6 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { ref, push, set, onValue } from "firebase/database"
+import { ref, push, set, onValue, get } from "firebase/database"
 import database from "../firebase"
 import Footer from "../components/Footer"
 import backTrack from "../images/backTrack.png"
@@ -8,6 +8,30 @@ import "../styles/AddPlantPage.css"
 
 export default function AddPlantPage({ userID }) {
     const navigate = useNavigate()
+    const [plantTypeOptions, setPlantTypeOptions] = useState([])
+    
+    
+    useEffect(() => {
+        const plantTypesRef = ref(database, 'plantTypes')
+        
+        
+        get(plantTypesRef).then((snapshot) => {
+            if (snapshot.exists()) {
+                const plantTypesData = snapshot.val()
+                // Convert object to array if needed
+                const plantTypesArray = Array.isArray(plantTypesData) 
+                    ? plantTypesData 
+                    : Object.values(plantTypesData)
+                
+                setPlantTypeOptions(plantTypesArray)
+            } else {
+                console.log("No plant types found in database")
+                setPlantTypeOptions([])
+            }
+        }).catch((error) => {
+            console.error("Error fetching plant types:", error)
+        })
+    }, [])
     
     const handleForm = (event, userID) => {
         event.preventDefault()
@@ -27,25 +51,26 @@ export default function AddPlantPage({ userID }) {
             const plantsData = snapshot.val() || {}
             const currentPlantsCount = Object.keys(plantsData).length
             
-            // Instead of uploading to Firebase Storage, use a local image path
-            // For frontend development only
             const fileName = imageFile ? imageFile.name : "default-plant.png"
             const imageUrl = `./src/images/${fileName}`
+            
+            const selectedPlantType = plantTypeOptions.find(plant => plant.type === plantType)
+            const metrics = selectedPlantType ? selectedPlantType.metrics : {
+                humidity: "50%", 
+                pHLevel: 7.0,
+                nutrients: {
+                    nitrogen: "20%",
+                    phosphorus: "10%",
+                    potassium: "15%"
+                }
+            }
             
             const newPlant = {
                 id: currentPlantsCount + 1,
                 name: plantName,
                 type: plantType,
                 imageUrl: imageUrl,
-                metrics: {
-                    humidity: "50%", 
-                    pHLevel: 7.0,
-                    nutrients: {
-                        nitrogen: "20%",
-                        phosphorus: "10%",
-                        potassium: "15%"
-                    }
-                }
+                metrics: metrics
             }
             
             set(newPlantRef, newPlant)
@@ -62,6 +87,15 @@ export default function AddPlantPage({ userID }) {
 
     function goBack() {
         navigate("/homePage")
+    }
+
+    
+    const DisplayOptions = () => {
+        return plantTypeOptions.map((plant, index) => (
+            <option key={index} value={plant.type}>
+                {plant.type}
+            </option>
+        ))
     }
     
     return (
@@ -101,13 +135,7 @@ export default function AddPlantPage({ userID }) {
                                     className="placeholder"
                                 >
                                     <option value="">Select plant type</option>
-                                    <option value="Potatoes">Potatoes</option>
-                                    <option value="Tomatoes">Tomatoes</option>
-                                    <option value="Wheat (Spring)">Wheat (Spring)</option>
-                                    <option value="Wheat (Winter)">Wheat (Winter)</option>
-                                    <option value="Onion (Green)">Onion (Green)</option>
-                                    <option value="Onion (Dry)">Onion (Dry)</option>
-                                    <option value="Onion (Seed)">Onion (Seed)</option>
+                                    <DisplayOptions />
                                 </select>
                             </div>
                             
@@ -126,7 +154,7 @@ export default function AddPlantPage({ userID }) {
                     </form>
                 </div>
             </main>
-            <Footer  page ="home"/>
+            <Footer page="home"/>
         </>
     )
 }
