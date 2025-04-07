@@ -135,7 +135,7 @@ The About Plant Page displays detailed information about a selected plant, inclu
 - Allows switching between tabs (All, pH Level, Humidity, NPK) to view specific data.
 - Includes a back button to return to the previous page.
 
-### Key Functionalities
+## Key Functionalities
 
 ## Data Handling
 
