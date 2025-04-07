@@ -98,25 +98,49 @@ export default function AboutPlantPage() {
         const pHDiff = Math.abs(plant.metrics.pHLevel - idealConditions.metrics.pHLevel)
         const isPHGood = pHDiff <= 0.5
         
-        const currentHumidity = parseFloat(plant.metrics.humidity.replace('%', ''))
-        const idealHumidity = idealConditions.metrics.humidity
+        // Handle both string with percentage and numeric values for humidity
+        const currentHumidity = typeof plant.metrics.humidity === 'string' 
+            ? parseFloat(plant.metrics.humidity.replace('%', ''))
+            : plant.metrics.humidity
+        
+        const idealHumidity = typeof idealConditions.metrics.humidity === 'string'
+            ? parseFloat(idealConditions.metrics.humidity.replace('%', ''))
+            : idealConditions.metrics.humidity
+        
         const humidityDiff = Math.abs(currentHumidity - idealHumidity)
         const isHumidityGood = humidityDiff <= 10
         
-        const currentNitrogen = parseFloat(plant.metrics.nutrients.nitrogen.replace('%', ''))
-        const currentPhosphorus = parseFloat(plant.metrics.nutrients.phosphorus.replace('%', ''))
-        const currentPotassium = parseFloat(plant.metrics.nutrients.potassium.replace('%', ''))
+        // Handle both string with percentage and numeric values for nutrients
+        const currentNitrogen = typeof plant.metrics.nutrients.nitrogen === 'string'
+            ? parseFloat(plant.metrics.nutrients.nitrogen.replace('%', ''))
+            : plant.metrics.nutrients.nitrogen
         
-        const idealNitrogen = idealConditions.metrics.nutrients.nitrogen;
-        const idealPhosphorus = idealConditions.metrics.nutrients.phosphorus;
-        const idealPotassium = idealConditions.metrics.nutrients.potassium;
+        const currentPhosphorus = typeof plant.metrics.nutrients.phosphorus === 'string'
+            ? parseFloat(plant.metrics.nutrients.phosphorus.replace('%', ''))
+            : plant.metrics.nutrients.phosphorus
+        
+        const currentPotassium = typeof plant.metrics.nutrients.potassium === 'string'
+            ? parseFloat(plant.metrics.nutrients.potassium.replace('%', ''))
+            : plant.metrics.nutrients.potassium
+        
+        const idealNitrogen = typeof idealConditions.metrics.nutrients.nitrogen === 'string'
+            ? parseFloat(idealConditions.metrics.nutrients.nitrogen.replace('%', ''))
+            : idealConditions.metrics.nutrients.nitrogen
+        
+        const idealPhosphorus = typeof idealConditions.metrics.nutrients.phosphorus === 'string'
+            ? parseFloat(idealConditions.metrics.nutrients.phosphorus.replace('%', ''))
+            : idealConditions.metrics.nutrients.phosphorus
+        
+        const idealPotassium = typeof idealConditions.metrics.nutrients.potassium === 'string'
+            ? parseFloat(idealConditions.metrics.nutrients.potassium.replace('%', ''))
+            : idealConditions.metrics.nutrients.potassium
         
         const isNitrogenGood = currentNitrogen >= idealNitrogen * 0.7
         const isPhosphorusGood = currentPhosphorus >= idealPhosphorus * 0.7
         const isPotassiumGood = currentPotassium >= idealPotassium * 0.7
         
         return isPHGood && isHumidityGood && isNitrogenGood && isPhosphorusGood && isPotassiumGood
-      }
+    }
 
     return (
         <>
