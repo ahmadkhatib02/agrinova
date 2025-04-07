@@ -85,7 +85,42 @@ Each plant entry added has the following structure:
 - `Footer` — Displays the page footer.  
 
 ## Styling  
-- Styles are managed in `AddPlantPage.css`.  
+- Styles are managed in `AddPlantPage.css`.
+
+# Plant Types Data Module Documentation
+
+## Overview
+
+The Plant Types Data Module provides a predefined list of plant types along with their optimal environmental metrics for use in the smart irrigation system. This dataset can be used to compare actual soil conditions against ideal conditions to make decisions about irrigation or plant recommendations.
+
+## Module Features
+
+Exports a static array of plant types and their optimal growing conditions.
+Each plant includes metrics for humidity, pH level, and essential nutrients (NPK).
+Can be used to determine the best plant for given soil conditions or to set default metric templates.
+Data Structure
+
+## Each plant object contains the following properties:
+
+type: Name of the plant.
+metrics:
+humidity: Recommended soil humidity in percentage.
+pHLevel: Ideal soil pH level.
+nutrients:
+nitrogen: Ideal nitrogen percentage.
+phosphorus: Ideal phosphorus percentage.
+potassium: Ideal potassium percentage.
+
+## Included Plant Types
+
+Potatoes
+Tomatoes
+Wheat (Spring)
+Wheat (Winter)
+Onion (Green)
+Onion (Dry)
+Onion (Seed)
+
 
 ---
 
