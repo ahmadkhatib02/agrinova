@@ -55,13 +55,41 @@ export default function AddPlantPage({ userID }) {
             const imageUrl = `./src/images/${fileName}`
             
             const selectedPlantType = plantTypeOptions.find(plant => plant.type === plantType)
-            const metrics = selectedPlantType ? selectedPlantType.metrics : {
-                humidity: "50%", 
-                pHLevel: 7.0,
-                nutrients: {
-                    nitrogen: "20%",
-                    phosphorus: "10%",
-                    potassium: "15%"
+            
+            let metrics = {}
+            
+            // Ensure consistent format with string percentages
+            if (selectedPlantType && selectedPlantType.metrics) {
+                const originalMetrics = selectedPlantType.metrics
+                metrics = {
+                    // Convert any numeric humidity to string with percentage
+                    humidity: typeof originalMetrics.humidity === 'number' 
+                        ? `${originalMetrics.humidity}%` 
+                        : originalMetrics.humidity,
+                    pHLevel: originalMetrics.pHLevel,
+                    nutrients: {
+                        // Convert any numeric nutrients to strings with percentages
+                        nitrogen: typeof originalMetrics.nutrients.nitrogen === 'number'
+                            ? `${originalMetrics.nutrients.nitrogen}%`
+                            : originalMetrics.nutrients.nitrogen,
+                        phosphorus: typeof originalMetrics.nutrients.phosphorus === 'number'
+                            ? `${originalMetrics.nutrients.phosphorus}%`
+                            : originalMetrics.nutrients.phosphorus,
+                        potassium: typeof originalMetrics.nutrients.potassium === 'number'
+                            ? `${originalMetrics.nutrients.potassium}%`
+                            : originalMetrics.nutrients.potassium
+                    }
+                }
+            } else {
+                // Default metrics as strings with percentage symbols
+                metrics = {
+                    humidity: "50%",
+                    pHLevel: 7.0,
+                    nutrients: {
+                        nitrogen: "20%",
+                        phosphorus: "10%",
+                        potassium: "15%"
+                    }
                 }
             }
             
