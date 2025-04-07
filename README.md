@@ -121,6 +121,61 @@ Data Structure
 
 ---
 
+# About Plant Page Component Documentation
+
+## Overview
+
+The About Plant Page displays detailed information about a selected plant, including its current metrics and how they compare to the ideal growing conditions stored in the Firebase Realtime Database. It allows users to view all metrics or filter by pH level, humidity, or nutrient (NPK) values. It also determines if the plant is "Healthy" based on threshold comparisons.
+
+## Component Features
+
+- Displays selected plant’s name, type, image, and current condition (Healthy/Unhealthy).
+- Fetches ideal metric thresholds from Firebase for the specific plant type.
+- Compares current vs. ideal conditions to determine health status.
+- Allows switching between tabs (All, pH Level, Humidity, NPK) to view specific data.
+- Includes a back button to return to the previous page.
+
+### Key Functionalities
+
+## Data Handling
+
+- Uses useLocation to receive the selected plantObject from the previous page.
+- Fetches ideal conditions for the plant type from Firebase on initial render.
+- Tracks loading state for both plant data and threshold data.
+- Health Check Logic
+- Compares plant metrics (pH, humidity, nitrogen, phosphorus, potassium) against ideal values.
+- Returns Healthy if all key metrics are within defined acceptable ranges.
+- Otherwise, displays Unhealthy.
+
+## Navigation
+Back button at the top navigates to the previous page using useNavigate.
+
+## Tab Selection
+
+- Users can switch between four views:
+- All: Shows all metrics in one view.
+- PH Level: Displays only pH comparison.
+- Humidity: Displays only humidity comparison.
+- NPK: Displays only nitrogen, phosphorus, and potassium comparison.
+
+## Props
+
+plantObject (from route location.state): The selected plant to be displayed and analyzed.
+
+## Imported Components
+
+- Footer — Displays the page footer.
+- All — Displays all metric comparisons.
+- Ph — Displays pH level comparison.
+- Humidity — Displays humidity comparison.
+- NPK — Displays nutrient (NPK) comparison.
+
+## Styling
+
+Styling is managed in AboutPlant.css.
+
+---
+
 # Database Component Documentation  
 
 ## Overview  
