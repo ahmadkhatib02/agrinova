@@ -102,27 +102,22 @@ Data Structure
 
 ## Each plant object contains the following properties:
 
-type: Name of the plant.
-metrics:
-humidity: Recommended soil humidity in percentage.
-pHLevel: Ideal soil pH level.
-nutrients:
-nitrogen: Ideal nitrogen percentage.
-phosphorus: Ideal phosphorus percentage.
-potassium: Ideal potassium percentage.
+- type: Name of the plant.
+- humidity: Recommended soil humidity in percentage.
+- pHLevel: Ideal soil pH level.
+- nitrogen: Ideal nitrogen percentage.
+- phosphorus: Ideal phosphorus percentage.
+- potassium: Ideal potassium percentage.
 
 ## Included Plant Types
 
-Potatoes
-Tomatoes
-Wheat (Spring)
-Wheat (Winter)
-Onion (Green)
-Onion (Dry)
-Onion (Seed)
-
-
----
+- Potatoes
+- Tomatoes
+- Wheat (Spring)
+- Wheat (Winter)
+- Onion (Green)
+- Onion (Dry)
+- Onion (Seed)
 
 ---
 
@@ -168,3 +163,4 @@ This database setup contains user profiles and their associated plant data for t
 - Once run, all users and their plant data become available in the Firebase console for use by the smart irrigation system app.  
  
 ---
+
