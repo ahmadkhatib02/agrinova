@@ -60,3 +60,47 @@ body, *{
     border-radius: 28px;
     padding: 19px 120px;
 }
+
+.logo{
+    display: block;
+    margin: 93px auto 63px auto;
+}
+
+.SignIn-container{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.no-margin{
+    margin: 0;
+}
+
+.google-signin{
+    background: #FFFFFF;
+    border: 1px solid #ECECEC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #494949;
+    padding: 20px 0px;
+    position: relative;
+}
+
+span{
+    flex: 1;
+    width: 100%;
+    text-align: center;
+}
+
+.google{
+    position: absolute;
+    left: 17px;
+}
+
+.white-button{
+    background: #EBF8F3;
+    border: none;
+    color: #3EB785;
+}
