@@ -54,10 +54,9 @@ export default function HomePage() {
   
   return (
     <>
-      {/* Header with plant count and user name */}
       <Header 
         number={plant.length} 
-        userName={currentUser ? currentUser.firstName : "User"} 
+        page= "home"
       />
       
       <main>
