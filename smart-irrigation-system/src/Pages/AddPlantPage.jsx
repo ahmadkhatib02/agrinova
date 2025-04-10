@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { ref, push, set, onValue, get } from "firebase/database"
-import database from "../firebase"
+import  {database} from "../firebase" 
+import { useAuth } from "../contexts/AuthContext" 
 import Footer from "../components/Footer"
 import backTrack from "../images/backTrack.png"
 import "../styles/AddPlantPage.css"
 
-export default function AddPlantPage({ userID }) {
+export default function AddPlantPage() {
     const navigate = useNavigate()
     const [plantTypeOptions, setPlantTypeOptions] = useState([])
-    
+    const [loading, setLoading] = useState(false)
+    const { currentUser } = useAuth() // Get current authenticated user
     
     useEffect(() => {
         const plantTypesRef = ref(database, 'plantTypes')
-        
         
         get(plantTypesRef).then((snapshot) => {
             if (snapshot.exists()) {
@@ -33,17 +34,27 @@ export default function AddPlantPage({ userID }) {
         })
     }, [])
     
-    const handleForm = (event, userID) => {
+    const handleForm = (event) => {
         event.preventDefault()
+        
+        if (!currentUser || !currentUser.id) {
+            console.error("User not authenticated")
+            return
+        }
+        
+        setLoading(true)
         
         const form = event.target
         const plantName = form.elements["plant-name"].value.trim()
         const plantType = form.elements["plant-type"].value.trim()
         const imageFile = form.elements["plant-image"].files[0]
         
-        if (!plantName || !plantType || !imageFile) return
+        if (!plantName || !plantType || !imageFile) {
+            setLoading(false)
+            return
+        }
         
-        const userPlantsRef = ref(database, `users/${userID}/plants`)
+        const userPlantsRef = ref(database, `users/${currentUser.id}/plants`)
         
         const newPlantRef = push(userPlantsRef)
         
@@ -105,10 +116,12 @@ export default function AddPlantPage({ userID }) {
                 .then(() => {
                     console.log("Plant added successfully!")
                     form.reset()
+                    setLoading(false)
                     navigate("/homePage") 
                 })
                 .catch((error) => {
                     console.error("Error:", error)
+                    setLoading(false)
                 })
         }, { onlyOnce: true }) 
     }
@@ -116,7 +129,6 @@ export default function AddPlantPage({ userID }) {
     function goBack() {
         navigate("/homePage")
     }
-
     
     const DisplayOptions = () => {
         return plantTypeOptions.map((plant, index) => (
@@ -126,18 +138,32 @@ export default function AddPlantPage({ userID }) {
         ))
     }
     
+    // Show loading state if user data is not yet loaded
+    if (!currentUser) {
+        return <div className="loading">Loading...</div>
+    }
+    
     return (
         <>
             <main>
                 <div className="add-plant-container">
-                    <form onSubmit={event => handleForm(event, userID)}>
+                    <form onSubmit={handleForm}>
                         <div className="button-group">
-                            <button type="button" onClick={goBack} className="cancel-button">
+                            <button 
+                                type="button" 
+                                onClick={goBack} 
+                                className="cancel-button"
+                                disabled={loading}
+                            >
                                 <img src={backTrack} alt="go back to homePage" />
                             </button>
                             <h2>Add a New Plant</h2>
-                            <button type="submit" className="save-button">
-                                Done
+                            <button 
+                                type="submit" 
+                                className="save-button"
+                                disabled={loading}
+                            >
+                                {loading ? "Adding..." : "Done"}
                             </button>
                         </div>
 
@@ -151,6 +177,7 @@ export default function AddPlantPage({ userID }) {
                                     placeholder="Enter plant name"
                                     className="placeholder"
                                     required
+                                    disabled={loading}
                                 />
                             </div>
                             
@@ -161,6 +188,7 @@ export default function AddPlantPage({ userID }) {
                                     name="plant-type"
                                     required
                                     className="placeholder"
+                                    disabled={loading}
                                 >
                                     <option value="">Select plant type</option>
                                     <DisplayOptions />
@@ -176,6 +204,7 @@ export default function AddPlantPage({ userID }) {
                                     accept="image/*"
                                     required
                                     className="placeholder transparent"
+                                    disabled={loading}
                                 />
                             </div>
                         </div>  

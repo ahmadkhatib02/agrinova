@@ -3,21 +3,36 @@ import "../styles/WelcomePage.css"
 import { useState } from "react"
 import mainLogo from "../images/Main Logo.png"
 import google from "../images/google.png"
+import SignIn from "../components/Welcome/SignIn"
+import SignUp from "../components/Welcome/SignUp"
 
 
-
-//Import your components here (make sure that they are saved in components folder)
-
-export default function Welcome () {
-    const [start , setStart] = useState("welcome")
-
-    function startApp (){
-        setStart("begin")
+export default function Welcome() {
+    const [page, setPage] = useState("welcome") 
+    
+    function startApp() {
+        setPage("begin")
     }
-
+    
+    function goToSignIn() {
+        setPage("signIn")
+    }
+    
+    function goToSignUp() {
+        setPage("signUp")
+    }
+    
+    function goToHome() {
+        setPage("welcome")
+    }
+    
+    function goToBegin() {
+        setPage("begin")
+    }
+    
     return (
         <main>
-            {start === "welcome" && 
+            {page === "welcome" && (
                 <>
                     <div className="landing-photo">
                         <div>
@@ -25,17 +40,15 @@ export default function Welcome () {
                             <h2 className="phone">For a Better Style</h2>
                         </div>  
                     </div>
-
                     <div>
                         <h1 className="title">Smart Irrigation for a Thriving Garden!</h1>
                         <p className="description">Automate watering, track soil moisture, and keep your plants healthy with real-time monitoring.</p>
                     </div>
-
                     <button className="start" onClick={startApp}>Get Started</button>
                 </>
-            }
-
-            {start === "begin" &&
+            )}
+            
+            {page === "begin" && (
                 <>
                     <img className="logo" src={mainLogo} alt="Main Logo" />
                     <h1 className="title">Let's Get Started</h1>
@@ -45,13 +58,19 @@ export default function Welcome () {
                             <img className="google" src={google} alt="google logo" />
                             <span>Continue with Google</span>
                         </button>
-                        <button className="start no-margin">Sign Up</button>
-                        <button className="start no-margin white-button">Sign in</button>
+                        <button className="start no-margin" onClick={goToSignUp}>Sign Up</button>
+                        <button className="start no-margin white-button" onClick={goToSignIn}>Sign in</button>
                     </div>
-                    
                 </>
-            }
-        </main>
+            )}
             
+            {page === "signIn" && (
+                <SignIn onBack={goToBegin} onSignUp={goToSignUp} />
+            )}
+            
+            {page === "signUp" && (
+                <SignUp onBack={goToBegin} onSignIn={goToSignIn} />
+            )}
+        </main>
     )
 }
