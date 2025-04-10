@@ -1,13 +1,11 @@
-// Import the functions you need from the SDKs you need
+// src/firebase.js
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getDatabase } from "firebase/database";
-import { getStorage } from "firebase/storage";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getAuth } from "firebase/auth";
+// Import analytics only if you're using it
+// import { getAnalytics } from "firebase/analytics";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Your Firebase configuration
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
   authDomain: import.meta.env.VITE_AUTH_DOMAIN,
@@ -19,10 +17,16 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_MEASUREMENT_ID
 };
 
-// Initialize Firebase
+// Initialize Firebase - do this only once
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+
+// Initialize services
 const database = getDatabase(app);
-const storage = getStorage (app);
-export {storage};
-export default database;
+const auth = getAuth(app);
+
+// Analytics is optional and browser-only
+// const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null;
+
+// Export what you need
+export { auth, database };
+export default app;
