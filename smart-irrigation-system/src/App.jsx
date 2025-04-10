@@ -5,6 +5,7 @@ import Welcome from "./Pages/Welcome";
 import AddPlantPage from "./Pages/AddPlantPage";
 import AboutPlantPage from "./Pages/AboutPlantPage";
 import Account from "./Pages/Account";
+import EditAccount from "./components/Account/EditAccount";
 
 // Protected route component
 function ProtectedRoute({ children }) {
@@ -59,6 +60,15 @@ function AppRoutes() {
             <Account />
           </ProtectedRoute>
         } 
+      />
+
+      <Route
+        path="/edit-account"
+        element ={
+          <ProtectedRoute>
+            <EditAccount />
+          </ProtectedRoute>
+        }
       />
     </Routes>
   );
