@@ -34,7 +34,17 @@ export default function AddPlantPage() {
         })
     }, [])
     
-    const handleForm = (event) => {
+    // Function to convert image file to base64
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        });
+    };
+    
+    const handleForm = async (event) => {
         event.preventDefault()
         
         if (!currentUser || !currentUser.id) {
@@ -54,76 +64,81 @@ export default function AddPlantPage() {
             return
         }
         
-        const userPlantsRef = ref(database, `users/${currentUser.id}/plants`)
-        
-        const newPlantRef = push(userPlantsRef)
-        
-        onValue(userPlantsRef, (snapshot) => {
-            const plantsData = snapshot.val() || {}
-            const currentPlantsCount = Object.keys(plantsData).length
+        try {
+            // Convert image to base64
+            const base64Image = await convertToBase64(imageFile);
             
-            const fileName = imageFile ? imageFile.name : "default-plant.png"
-            const imageUrl = `./src/images/${fileName}`
+            const userPlantsRef = ref(database, `users/${currentUser.id}/plants`)
             
-            const selectedPlantType = plantTypeOptions.find(plant => plant.type === plantType)
+            const newPlantRef = push(userPlantsRef)
             
-            let metrics = {}
-            
-            // Ensure consistent format with string percentages
-            if (selectedPlantType && selectedPlantType.metrics) {
-                const originalMetrics = selectedPlantType.metrics
-                metrics = {
-                    // Convert any numeric humidity to string with percentage
-                    humidity: typeof originalMetrics.humidity === 'number' 
-                        ? `${originalMetrics.humidity}%` 
-                        : originalMetrics.humidity,
-                    pHLevel: originalMetrics.pHLevel,
-                    nutrients: {
-                        // Convert any numeric nutrients to strings with percentages
-                        nitrogen: typeof originalMetrics.nutrients.nitrogen === 'number'
-                            ? `${originalMetrics.nutrients.nitrogen}%`
-                            : originalMetrics.nutrients.nitrogen,
-                        phosphorus: typeof originalMetrics.nutrients.phosphorus === 'number'
-                            ? `${originalMetrics.nutrients.phosphorus}%`
-                            : originalMetrics.nutrients.phosphorus,
-                        potassium: typeof originalMetrics.nutrients.potassium === 'number'
-                            ? `${originalMetrics.nutrients.potassium}%`
-                            : originalMetrics.nutrients.potassium
+            onValue(userPlantsRef, (snapshot) => {
+                const plantsData = snapshot.val() || {}
+                const currentPlantsCount = Object.keys(plantsData).length
+                
+                const selectedPlantType = plantTypeOptions.find(plant => plant.type === plantType)
+                
+                let metrics = {}
+                
+                // Ensure consistent format with string percentages
+                if (selectedPlantType && selectedPlantType.metrics) {
+                    const originalMetrics = selectedPlantType.metrics
+                    metrics = {
+                        // Convert any numeric humidity to string with percentage
+                        humidity: typeof originalMetrics.humidity === 'number' 
+                            ? `${originalMetrics.humidity}%` 
+                            : originalMetrics.humidity,
+                        pHLevel: originalMetrics.pHLevel,
+                        nutrients: {
+                            // Convert any numeric nutrients to strings with percentages
+                            nitrogen: typeof originalMetrics.nutrients.nitrogen === 'number'
+                                ? `${originalMetrics.nutrients.nitrogen}%`
+                                : originalMetrics.nutrients.nitrogen,
+                            phosphorus: typeof originalMetrics.nutrients.phosphorus === 'number'
+                                ? `${originalMetrics.nutrients.phosphorus}%`
+                                : originalMetrics.nutrients.phosphorus,
+                            potassium: typeof originalMetrics.nutrients.potassium === 'number'
+                                ? `${originalMetrics.nutrients.potassium}%`
+                                : originalMetrics.nutrients.potassium
+                        }
+                    }
+                } else {
+                    // Default metrics as strings with percentage symbols
+                    metrics = {
+                        humidity: "50%",
+                        pHLevel: 7.0,
+                        nutrients: {
+                            nitrogen: "20%",
+                            phosphorus: "10%",
+                            potassium: "15%"
+                        }
                     }
                 }
-            } else {
-                // Default metrics as strings with percentage symbols
-                metrics = {
-                    humidity: "50%",
-                    pHLevel: 7.0,
-                    nutrients: {
-                        nitrogen: "20%",
-                        phosphorus: "10%",
-                        potassium: "15%"
-                    }
+                
+                const newPlant = {
+                    id: currentPlantsCount + 1,
+                    name: plantName,
+                    type: plantType,
+                    imageData: base64Image, // Store base64 image data directly
+                    metrics: metrics
                 }
-            }
-            
-            const newPlant = {
-                id: currentPlantsCount + 1,
-                name: plantName,
-                type: plantType,
-                imageUrl: imageUrl,
-                metrics: metrics
-            }
-            
-            set(newPlantRef, newPlant)
-                .then(() => {
-                    console.log("Plant added successfully!")
-                    form.reset()
-                    setLoading(false)
-                    navigate("/homePage") 
-                })
-                .catch((error) => {
-                    console.error("Error:", error)
-                    setLoading(false)
-                })
-        }, { onlyOnce: true }) 
+                
+                set(newPlantRef, newPlant)
+                    .then(() => {
+                        console.log("Plant added successfully!")
+                        form.reset()
+                        setLoading(false)
+                        navigate("/homePage") 
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error)
+                        setLoading(false)
+                    })
+            }, { onlyOnce: true }) 
+        } catch (error) {
+            console.error("Error processing image:", error)
+            setLoading(false)
+        }
     }
 
     function goBack() {

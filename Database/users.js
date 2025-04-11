@@ -6,6 +6,7 @@ const users = [
       email: "johndoe@example.com",
       password: "securePassword123", 
       profilePicture: "../smart-irrigation-system/src/images/Blank pfp.jpg",
+      isDark : false,
       plants: [
         {
           id: 1,
@@ -46,6 +47,7 @@ const users = [
       email: "janesmith@example.com",
       password: "anotherSecurePassword",
       profilePicture: "../smart-irrigation-system/src/images/Blank pfp.jpg",
+      isDark : false,
       plants: [
         {
           id: 1,
