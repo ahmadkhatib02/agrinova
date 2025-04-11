@@ -54,10 +54,10 @@ export default function Welcome() {
                     <h1 className="title">Let's Get Started</h1>
                     <p className="description">Let's dive in into your account</p>
                     <div className="SignIn-container">
-                        <button className="start no-margin google-signin">
+                        {/* <button className="start no-margin google-signin">
                             <img className="google" src={google} alt="google logo" />
                             <span>Continue with Google</span>
-                        </button>
+                        </button> */}
                         <button className="start no-margin" onClick={goToSignUp}>Sign Up</button>
                         <button className="start no-margin white-button" onClick={goToSignIn}>Sign in</button>
                     </div>

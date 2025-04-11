@@ -19,6 +19,8 @@ export default function Account() {
     const fileInputRef = useRef(null)
     const location = useLocation()
     const [userData, setUserData] = useState(null)
+    const [showThemeOptions, setShowThemeOptions] = useState(false)
+    const [selectedTheme, setSelectedTheme] = useState(currentUser?.isDark ? "dark" : "light")
 
     // Convert an imported image to Base64
     const convertImageToBase64 = (imageModule) => {
@@ -66,6 +68,9 @@ export default function Account() {
 
                         // Set profileImage to the validated value
                         setProfileImage(validProfilePicture)
+                        
+                        // Set the current theme
+                        setSelectedTheme(updatedUserData.isDark ? "dark" : "light")
                     }
                 }
             } catch (error) {
@@ -106,6 +111,9 @@ export default function Account() {
                         
                         setCurrentUser(updatedUser);
                         localStorage.setItem("user", JSON.stringify(updatedUser));
+                        
+                        // Update theme selection
+                        setSelectedTheme(latestUserData.isDark ? "dark" : "light");
                     }
                 } catch (error) {
                     console.error("Error fetching latest user data:", error);
@@ -115,6 +123,7 @@ export default function Account() {
         
         fetchLatestUserData();
     }, [location.key]);
+    
     // Handle photo change
     const handleChangePhoto = () => {
         fileInputRef.current.click()
@@ -186,6 +195,66 @@ export default function Account() {
         setProfileImage(defaultImg)
     }
 
+    // Toggle the theme options display
+    const toggleThemeOptions = () => {
+        setShowThemeOptions(!showThemeOptions)
+    }
+
+    // Handle theme change
+    const handleThemeChange = (e) => {
+        setSelectedTheme(e.target.value)
+    }
+
+    // Save theme preference
+    const saveThemePreference = async (e) => {
+        e.preventDefault()
+        
+        if (!currentUser || !currentUser.id) return
+        
+        try {
+            setLoading(true)
+            
+            // Get current user data first to preserve all properties
+            const userRef = ref(database, `users/${currentUser.id}`)
+            const snapshot = await get(userRef)
+            
+            if (snapshot.exists()) {
+                const userData = snapshot.val()
+                
+                // Only update isDark property
+                await update(userRef, {
+                    isDark: selectedTheme === "dark"
+                })
+                
+                // Get the updated user data
+                const updatedSnapshot = await get(userRef)
+                
+                if (updatedSnapshot.exists()) {
+                    const updatedUserData = updatedSnapshot.val()
+                    
+                    // Create a new user object with the current profile picture
+                    const updatedUser = {
+                        ...updatedUserData,
+                        profilePicture: profileImage // Preserve the current profile image
+                    }
+                    
+                    // Update localStorage only
+                    localStorage.setItem("user", JSON.stringify(updatedUser))
+                    
+                    // Close theme options
+                    setShowThemeOptions(false)
+                    
+                    alert("Theme preference saved!")
+                }
+            }
+        } catch (error) {
+            console.error("Error saving theme preference:", error)
+            alert("Failed to save theme preference. Please try again.")
+        } finally {
+            setLoading(false)
+        }
+    }
+
     if (!currentUser) {
         return (
             <>
@@ -232,17 +301,77 @@ export default function Account() {
                 />
             </section>
 
-            <section className="account-section">
+            {/* <section className="account-section" onClick={toggleThemeOptions}>
                 <img src={eye} alt="eye icon" style={{ marginLeft: "25px" }} />
                 <p>App Appearance</p>
                 <img className="position-button" src={button} alt="Check app appearance" />
-            </section>
+            </section> */}
 
             <section onClick={handleLogOut} className="account-section">
                 <img src={logout} alt="logout" style={{ marginLeft: "25px" }} />
                 <p style={{ color: "#F86B69", fontWeight: "600" }}>Log out</p>
             </section>
             <Footer page="account" />
+
+            {/* {showThemeOptions && (
+    <section className="theme-options-overlay">
+        <div className="theme-options-container">
+            <h2 className="theme-title">Choose Theme</h2>
+            <form onSubmit={saveThemePreference}>
+                <div className="radio-group">
+                    <div className="radio-option">
+                        <input 
+                            type="radio" 
+                            id="light" 
+                            name="theme" 
+                            value="light" 
+                            checked={selectedTheme === "light"} 
+                            onChange={handleThemeChange}
+                        />
+                        <label htmlFor="light">Light</label>
+                    </div>
+                    <div className="radio-option">
+                        <input 
+                            type="radio" 
+                            id="dark" 
+                            name="theme" 
+                            value="dark" 
+                            checked={selectedTheme === "dark"} 
+                            onChange={handleThemeChange}
+                        />
+                        <label htmlFor="dark">Dark</label>
+                    </div>
+                </div>
+                <div className="button-container">
+                    <button 
+                        type="button" 
+                        className="cancel-button" 
+                        onClick={toggleThemeOptions}
+                        disabled={loading}
+                    >
+                        Cancel
+                    </button>
+                    <button 
+                        type="submit" 
+                        className="save-button"
+                        disabled={loading}
+                    >
+                        OK
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+)} */}
+            
+            {/* File input for profile picture (hidden) */}
+            <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                accept="image/*"
+                onChange={handleFileChange}
+            />
         </>
     )
 }
