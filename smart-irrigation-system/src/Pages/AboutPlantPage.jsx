@@ -142,6 +142,9 @@ export default function AboutPlantPage() {
         return isPHGood && isHumidityGood && isNitrogenGood && isPhosphorusGood && isPotassiumGood
     }
 
+    // Determine the image source - use imageData (base64) if available, fall back to imageUrl
+    const imageSrc = plant?.imageData || plant?.imageUrl;
+
     return (
         <>
             <header className="header">
@@ -152,7 +155,7 @@ export default function AboutPlantPage() {
             </header>
             <main className="all-content">
                 <section>
-                    {plant.imageUrl && <img src={plant.imageUrl} alt={plant.name}  className="image"/>}
+                    {imageSrc && <img src={imageSrc} alt={plant.name} className="image"/>}
                     <div className="intro-container">
                         <h1 className="main-name">{plant.name}</h1>
                         <p className={isHealthy()? "Healthy": "Unhealthy"}>{isHealthy()? "Healthy": "Unhealthy"}</p>

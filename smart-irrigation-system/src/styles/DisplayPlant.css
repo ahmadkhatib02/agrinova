@@ -31,3 +31,8 @@
     transform: translateY(-50%); 
     margin-left: 32px; 
 }
+
+.plant-photo{
+    width: 120px;
+    height: 120px;
+}

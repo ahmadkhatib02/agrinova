@@ -61,6 +61,7 @@ export function AuthProvider({ children }) {
         email: email,
         password: password, // Plain text password
         profilePicture: "../smart-irrigation-system/src/images/Blank pfp.jpg",
+        isdark: false,
         plants: []
       };
       
