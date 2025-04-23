@@ -48,6 +48,24 @@ To run this project locally, follow these steps:
 
 Make sure you have a Firebase project set up and the necessary configuration files in place.
 
+## Screenshots
+
+### Plant Dashboard
+
+![Plant Dashboard](smart-irrigation-system/src/images/dashboard.png)
+
+### Add New Plant
+
+![Add New Plant](smart-irrigation-system/src/images/addPlant.png)
+
+### About Plant
+
+![About Plant](smart-irrigation-system/src/images/about.png)
+
+### Account Page
+
+![Account Page](smart-irrigation-system/src/images/account.png)
+
 ## Contributing
 
 Feel free to fork the repository and submit pull requests. Any contributions are welcome!
